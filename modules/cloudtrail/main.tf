@@ -43,3 +43,15 @@ resource "aws_s3_bucket" "cluster_cloudtrail" {
 }
 POLICY
 }
+
+
+resource "aws_s3_bucket" "cluster_cloudtrail_log_bucket" {
+  bucket = "cluster_cloudtrail-log-bucket"
+}
+
+resource "aws_s3_bucket_logging" "cluster_cloudtrail" {
+  bucket = aws_s3_bucket.cluster_cloudtrail.id
+
+  target_bucket = aws_s3_bucket.cluster_cloudtrail_log_bucket.id
+  target_prefix = "log/"
+}
